@@ -25,10 +25,8 @@ int dot_duration = 100;
 
 // This is the text which will be flashed
 // repeatedly. Characters only, no numbers
-// are supported
-const char* text = 
-"Quentin McDonald";
-// Max is: ############################## 
+// are supported. Max is 30 characters, any more will be ignored.
+const char* text = "Quentin McDonald";
 
 #define MAX_CHARS 30
 
@@ -87,6 +85,126 @@ void convert_text_to_morse(void) {
       morse[i] += (DOT<<4);
       break;
 
+    case 'F':
+      // Dot Dot Dash Dot
+      morse[i] = 4;
+      morse[i] += (DOT << 4) | (DOT<<5) | (DASH<<6) | (DOT<<7 );
+      break;
+
+    case 'G':
+      // Dash Dash Dot
+      morse[i] = 3;
+      morse[i] += (DASH << 4 ) | (DASH << 5) | (DOT << 6 );
+      break;
+
+    case 'I':
+      // Dot Dot
+      morse[i] = 2;
+      morse[i] += (DOT << 4 ) | (DOT << 5 );
+      break;
+
+    case 'J':
+      // Dot Dash Dash Dash
+      morse[i] = 4;
+      morse[i] += (DOT << 4 ) | (DASH << 5 ) | (DASH << 6 ) | (DASH << 7 );
+      break;
+
+    case 'K':
+      // Dash Dot Dash
+      morse[i] = 3;
+      morse[i] += (DASH << 4 ) | (DOT << 5 ) | (DASH << 6 );
+      break;
+
+    case 'L':
+      // Dot Dash Dot Dot
+      morse[i] = 4;
+      morse[i] += (DOT << 4 ) | (DASH << 5 ) | (DOT << 6) | (DOT << 7 );
+      break;
+
+    case 'M':
+      // Dash Dash
+      morse[i] = 2;
+      morse[i] += (DASH << 4 ) | (DASH << 5 );
+      break;
+
+    case 'N':
+      // Dash Dot
+      morse[i] = 2;
+      morse[i] += (DASH << 4 ) | (DOT << 5 );
+      break;
+
+    case 'O':
+      // Dash Dash Dash
+      morse[i] = 3;
+      morse[i] += (DASH << 4 ) | (DASH << 5 ) | (DASH << 6 );
+      break;
+
+    case 'P':
+      // Dot Dash Dash Dot
+      morse[i] = 4;
+      morse[i] += (DOT << 4 ) | (DASH << 5 ) | (DASH << 6 ) | (DOT << 7 );
+      break;
+
+    case 'Q':
+      // Dash Dash Dot Dash
+      morse[i] = 4;
+      morse[i] += (DASH << 4 ) | (DASH << 5 ) | (DOT << 6 ) | (DASH << 7 );
+      break;
+
+    case 'R':
+      // Dot Dash Dot
+      morse[i] = 3;
+      morse[i] += (DOT << 4 ) | (DASH << 5 ) | (DOT << 6 );
+      break;
+
+    case 'S':
+      // Dot Dot Dot
+      morse[i] = 3;
+      morse[i] += (DOT << 4 ) | (DASH << 5 ) | (DOT << 7 );
+      break;
+
+    case 'T':
+      // Dash
+      morse[i] = 1;
+      morse[i] += (DASH << 4 );
+      break;
+
+    case 'U':
+      // Dot Dot Dash
+      morse[i] = 3;
+      morse[i] += (DOT << 4 ) | (DOT << 5 ) | (DASH << 6 );
+      break;
+
+    case 'V':
+      // Dot Dot Dot Dash
+      morse[i] = 4;
+      morse[i] += (DOT << 4 ) | (DOT << 5 ) | (DOT << 6 ) | (DASH << 7); 
+      break;
+
+    case 'W':
+      // Dot Dash Dash
+      morse[i] = 3;
+      morse[i] += (DOT << 4 ) | (DASH << 5 ) | (DASH << 6 ) ;
+      break;
+
+    case 'X':
+      // Dash Dot Dot Dash
+      morse[i] = 4;
+      morse[i] += (DASH << 4 ) | (DOT << 5 ) | (DOT << 6 ) | (DASH << 7 );
+      break;
+
+    case 'Y':
+      // Dash Dot Dash Dash
+      morse[i] = 4;
+      morse[i] += (DASH << 4 ) | (DOT << 5 ) | (DASH << 6 ) | (DASH << 7 );
+      break;
+
+    case 'Z':
+      // Dash Dash Dot Dot
+      morse[i] = 4;
+      morse[i] += (DASH << 4 ) | (DASH << 5 ) | (DOT << 6 ) | (DOT << 7 );
+      break;
+
     default: // Just ignore any non-characters
       break;
 
@@ -120,7 +238,7 @@ void loop () {
     num_flashes = morse[i]  & 0b00001111;
     bit_to_read = 4;
     for ( j=0; j < num_flashes; j++ ) {
-      
+
       if( bitRead( morse[i], bit_to_read) == DOT ) {
         delay_time = dot_duration;
       } 
@@ -131,18 +249,33 @@ void loop () {
       digitalWrite(LED_PIN,HIGH);
       delay( delay_time );
       digitalWrite( LED_PIN, LOW );
-      delay( dot_duration ); // One unit delay between flashes
+      if( j != num_flashes-1 ) {
+        delay( dot_duration ); // One unit delay between flashes
+      }
       bit_to_read += 1;
     }
 
     // A delay of 3 units between letters
-    delay( dot_duration * 3 );
+    if( i != num_characters-1 ) {
+      delay( dot_duration * 3 );
+    }
 
   }
 
   // A delay of 7 units between words
   delay( dot_duration * 7 );
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
