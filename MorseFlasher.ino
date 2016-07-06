@@ -5,7 +5,10 @@
  * which represent a string.
  * 
  * It is assumed that an LED is attached to
- * ATTiny pin 0
+ * ATTiny pin 0 (chip pin 5)
+ *
+ * A potentiometer set up in voltage divider is leading to
+ * pin A3 (chip pin 2)
  * 
  * June 2016
  * D Q McDonald
